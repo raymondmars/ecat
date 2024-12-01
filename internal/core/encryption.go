@@ -29,7 +29,6 @@ func (e *encryption) Encrypt(key []byte, filePath string) error {
 	finalData := append(ECAT_FILE_HEADER_IDENTITY, encryptedData...)
 	encoded := base64.StdEncoding.EncodeToString(finalData)
 
-	// outputFile := filePath + ".ecat"
 	return ioutil.WriteFile(filePath, []byte(encoded), 0600)
 }
 
