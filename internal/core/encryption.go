@@ -21,6 +21,12 @@ func (e *encryption) Encrypt(key []byte, filePath string) error {
 		log.Fatalf("Failed to read file: %v", err)
 		return err
 	}
+
+	decodedData, err := base64.StdEncoding.DecodeString(string(data))
+	if err == nil && bytes.HasPrefix(decodedData, ECAT_FILE_HEADER_IDENTITY) {
+		return fmt.Errorf("the file is already encrypted")
+	}
+
 	encryptedData, err := e.internalEncrypt(data, key)
 	if err != nil {
 		log.Fatalf("Encryption failed: %v", err)
